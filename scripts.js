@@ -1,1 +1,31 @@
-(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const e of document.querySelectorAll('link[rel="modulepreload"]'))i(e);new MutationObserver(e=>{for(const r of e)if(r.type==="childList")for(const o of r.addedNodes)o.tagName==="LINK"&&o.rel==="modulepreload"&&i(o)}).observe(document,{childList:!0,subtree:!0});function s(e){const r={};return e.integrity&&(r.integrity=e.integrity),e.referrerPolicy&&(r.referrerPolicy=e.referrerPolicy),e.crossOrigin==="use-credentials"?r.credentials="include":e.crossOrigin==="anonymous"?r.credentials="omit":r.credentials="same-origin",r}function i(e){if(e.ep)return;e.ep=!0;const r=s(e);fetch(e.href,r)}})();
+document.addEventListener('DOMContentLoaded', () => {
+    // Constants
+    const triggerElement = document.getElementById('scrolly-text-3');
+    const currentImage = document.querySelector('.frame-image'); 
+    console.log(currentImage.src)
+    const image2URL = 'https://uploads-ssl.webflow.com/655a5e3e34bc8a89769ff74e/6583f8350811f7701cc61e05_space.webp';
+
+    let animationStarted = false; // Flag to ensure the animation only starts once
+
+    // Function to check if the element is at the top 30% of the viewport
+    function isInViewport() {
+        const rect = triggerElement.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.3
+        );
+    }
+
+    function imageTransition(newImageUrl) {
+        currentImage.srcset = newImageUrl;
+        console.log('animation triggered')
+    }
+
+    window.addEventListener('scroll', () => {
+        if (isInViewport() && !animationStarted) {
+            console.log('Scroll event triggered');
+            imageTransition(image2URL);
+            animationStarted = true;
+        }
+    });
+});
