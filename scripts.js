@@ -1,30 +1,28 @@
-document.addEventListener('DOMContentLoaded', function() {
     function storyPageScripts() {
-        const triggerElement = document.getElementById('scrolly-text-3');
-        const currentImage = document.querySelector('.frame-image'); 
         const image2URL = 'https://uploads-ssl.webflow.com/655a5e3e34bc8a89769ff74e/6583f8350811f7701cc61e05_space.webp';
-
-        if (!triggerElement || !currentImage) {
-            // If the required elements are not found, exit the function
-            return;
+        let animationStarted = false;
+    
+        function isInViewport(element) {
+            if (element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.3
+                );
+            }
+            return false;
         }
-        
-        let animationStarted = false; // Flag to ensure the animation only starts once
-
-        function isInViewport() {
-            const rect = triggerElement.getBoundingClientRect();
-            return (
-                rect.top >= 0 &&
-                rect.top <= (window.innerHeight || document.documentElement.clientHeight) * 0.3
-            );
-        }
-
+    
         function imageTransition(newImageUrl) {
-            currentImage.srcset = newImageUrl;
+            const currentImage = document.querySelector('.frame-image');
+            if (currentImage) {
+                currentImage.srcset = newImageUrl;
+            }
         }
-
+    
         window.addEventListener('scroll', () => {
-            if (isInViewport() && !animationStarted) {
+            const triggerElement = document.getElementById('scrolly-text-3');
+            if (isInViewport(triggerElement) && !animationStarted) {
                 imageTransition(image2URL);
                 animationStarted = true;
             }
@@ -53,4 +51,3 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }]
     });
-});
