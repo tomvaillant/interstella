@@ -1,4 +1,28 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Barba transitions
+    barba.init({
+        transitions: [{
+            name: 'opacity-transition',
+            leave(data) {
+            // Animate the opacity of the current container to 0
+            return gsap.to(data.current.container, {
+                opacity: 0,
+                duration: 1
+            });
+            },
+            enter(data) {
+            // Start the next container at opacity 0
+            gsap.from(data.next.container, {
+                opacity: 0
+            });
+            // Animate the opacity of the next container to 1
+            return gsap.to(data.next.container, {
+                opacity: 1,
+                duration: 1
+            });
+            }
+        }]
+    });
     // Constants
     const triggerElement = document.getElementById('scrolly-text-3');
     const currentImage = document.querySelector('.frame-image'); 
