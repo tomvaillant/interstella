@@ -2,7 +2,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Constants
     const triggerElement = document.getElementById('scrolly-text-3');
     const currentImage = document.querySelector('.frame-image'); 
-    console.log(currentImage.src)
     const image2URL = 'https://uploads-ssl.webflow.com/655a5e3e34bc8a89769ff74e/6583f8350811f7701cc61e05_space.webp';
 
     let animationStarted = false; // Flag to ensure the animation only starts once
@@ -29,3 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
+
+    // https://uploads-ssl.webflow.com/655a5e3e34bc8a89769ff74e/655a5f21aced22f21d962899_COCKPIT.webp
+    // https://uploads-ssl.webflow.com/655a5e3e34bc8a89769ff74e/6583f8350811f7701cc61e05_space.webp
+    // https://uploads-ssl.webflow.com/655a5e3e34bc8a89769ff74e/6584470007d534b8dad74572_nebula.webp
