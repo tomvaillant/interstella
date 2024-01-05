@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentImage = document.querySelector('.frame-image'); 
         const image2URL = 'https://uploads-ssl.webflow.com/655a5e3e34bc8a89769ff74e/6583f8350811f7701cc61e05_space.webp';
 
+        if (!triggerElement || !currentImage) {
+            // If the required elements are not found, exit the function
+            return;
+        }
+        
         let animationStarted = false; // Flag to ensure the animation only starts once
 
         function isInViewport() {
