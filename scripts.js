@@ -194,7 +194,7 @@ function initStoryPage() {
         });
         });
         // Set up the GUI
-        const gui = new dat.GUI();
+        const gui = new GUI();
         const guiParams = {
             canvasWidth: canvasWidth,
             canvasHeight: canvasHeight
@@ -254,9 +254,8 @@ function initStyles() {
     document.body.style.overflow = 'auto';
 }
 
-
-
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("barba initialized");
     barba.init({
         transitions: [{
             name: 'opacity-transition',
@@ -284,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     lenis.resize();
                     console.log("lenis resize");
                 }});
-                }
+            }
         }]
     });
 });
