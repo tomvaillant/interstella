@@ -1,77 +1,37 @@
   
-//   LENIS SMOOTH SCROLL
-  const lenis = new Lenis({
-    autoinit: true,
-    duration: 1,
-    orientation: "vertical",
-    smoothWheel: true,
-    smoothTouch: false,
-    touchMultiplier: 1.5,
-    easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -15 * t)),
-    useOverscroll: true,
-    useControls: true,
-    useAnchor: true,
-    useRaf: true,
-    infinite: false
-  });
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("barba initialized");
+    barba.init({
+        transitions: [{
+            name: 'opacity-transition',
+            leave(data) {
+            console.log('leave');
+            return gsap.to(data.current.container, { opacity: 0, duration: 1, onComplete: () => {
+                data.current.container.style.display = 'none'; 
+            }});
+            },
+            enter(data) {
+                console.log('enter');
+                switch (data.next.namespace) {
+                case 'chapters':
+                    initStoryPage();
+                    initStyles();
+                    break;
+                case 'story':
+                    initChaptersPage();
+                    initStyles();
+                    break;
+                }
 
-  function raf(time) {
-    lenis.raf(time);
-    console.log("Height : ", Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight));
-    requestAnimationFrame(raf);
-  }
-
-  requestAnimationFrame(raf);
-  /*window.addEventListener(
-    "touchmove",
-    function(event) {
-        if (event.scale !== 1) {
-            event.preventDefault();
-        }
-    },
-    { passive: false }
-  );*/
-  /*let lenis;
-  let heightPage = 0
-  if (Webflow.env("editor") === undefined) {
-    lenis = new Lenis({
-      autoinit: true,
-      duration: 1,
-      orientation: "vertical",
-      smoothWheel: true,
-      smoothTouch: false,
-      touchMultiplier: 1.5,
-      easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -15 * t)),
-      useOverscroll: true,
-      useControls: true,
-      useAnchor: true,
-      useRaf: true,
-      infinite: false
+                gsap.from(data.next.container, { opacity: 0 });
+                return gsap.to(data.next.container, { opacity: 1, duration: 1 , onComplete: () => {
+                    lenis.resize();
+                    console.log("lenis resize");
+                }});
+            }
+        }]
     });
-    heightPage = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
-    function raf(time) {
-      lenis.raf(time);
-      let newHeightPage = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
-      if (heightPage !== newHeightPage) {
-          lenis.resize();
-      }
-    }
-    requestAnimationFrame(raf);
-  }
-  $("[data-lenis-start]").on("click", function () {
-    lenis.start();
-  });
-  $("[data-lenis-stop]").on("click", function () {
-    lenis.stop();
-  });
-  $("[data-lenis-toggle]").on("click", function () {
-    $(this).toggleClass("stop-scroll");
-    if ($(this).hasClass("stop-scroll")) {
-      lenis.stop();
-    } else {
-      lenis.start();
-    }
-  });*/
+});
   
 // STORY PAGE SCRIPTS
 function initStoryPage() {
@@ -193,8 +153,9 @@ function initStoryPage() {
             gsap.to(material.uniforms.time, { value: 1, duration: 1 });
         });
         });
+
         // Set up the GUI
-        const gui = new GUI();
+        const gui = new dat.GUI();
         const guiParams = {
             canvasWidth: canvasWidth,
             canvasHeight: canvasHeight
@@ -254,36 +215,77 @@ function initStyles() {
     document.body.style.overflow = 'auto';
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("barba initialized");
-    barba.init({
-        transitions: [{
-            name: 'opacity-transition',
-            leave(data) {
-            console.log('leave');
-            return gsap.to(data.current.container, { opacity: 0, duration: 1, onComplete: () => {
-                data.current.container.style.display = 'none'; 
-            }});
-            },
-            enter(data) {
-                console.log('enter');
-                switch (data.next.namespace) {
-                case 'chapters':
-                    initStoryPage();
-                    initStyles();
-                    break;
-                case 'story':
-                    initChaptersPage();
-                    initStyles();
-                    break;
-                }
+//   LENIS SMOOTH SCROLL
+const lenis = new Lenis({
+    autoinit: true,
+    duration: 1,
+    orientation: "vertical",
+    smoothWheel: true,
+    smoothTouch: false,
+    touchMultiplier: 1.5,
+    easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -15 * t)),
+    useOverscroll: true,
+    useControls: true,
+    useAnchor: true,
+    useRaf: true,
+    infinite: false
+  });
 
-                gsap.from(data.next.container, { opacity: 0 });
-                return gsap.to(data.next.container, { opacity: 1, duration: 1 , onComplete: () => {
-                    lenis.resize();
-                    console.log("lenis resize");
-                }});
-            }
-        }]
+  function raf(time) {
+    lenis.raf(time);
+    console.log("Height : ", Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight));
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+  /*window.addEventListener(
+    "touchmove",
+    function(event) {
+        if (event.scale !== 1) {
+            event.preventDefault();
+        }
+    },
+    { passive: false }
+  );*/
+  /*let lenis;
+  let heightPage = 0
+  if (Webflow.env("editor") === undefined) {
+    lenis = new Lenis({
+      autoinit: true,
+      duration: 1,
+      orientation: "vertical",
+      smoothWheel: true,
+      smoothTouch: false,
+      touchMultiplier: 1.5,
+      easing: (t) => (t === 1 ? 1 : 1 - Math.pow(2, -15 * t)),
+      useOverscroll: true,
+      useControls: true,
+      useAnchor: true,
+      useRaf: true,
+      infinite: false
     });
-});
+    heightPage = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+    function raf(time) {
+      lenis.raf(time);
+      let newHeightPage = Math.max(document.body.scrollHeight, document.body.offsetHeight, document.documentElement.clientHeight, document.documentElement.scrollHeight, document.documentElement.offsetHeight);
+      if (heightPage !== newHeightPage) {
+          lenis.resize();
+      }
+    }
+    requestAnimationFrame(raf);
+  }
+  $("[data-lenis-start]").on("click", function () {
+    lenis.start();
+  });
+  $("[data-lenis-stop]").on("click", function () {
+    lenis.stop();
+  });
+  $("[data-lenis-toggle]").on("click", function () {
+    $(this).toggleClass("stop-scroll");
+    if ($(this).hasClass("stop-scroll")) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
+  });*/
+
