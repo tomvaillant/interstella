@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log('enter');
                 switch (data.next.namespace) {
                 case 'chapters':
-                    initStoryPage();
+                    initChaptersPage();
                     initStyles();
                     break;
                 case 'story':
-                    initChaptersPage();
+                    initStoryPage();
                     initStyles();
                     break;
                 }
