@@ -72,41 +72,6 @@ const lenis = new Lenis({
     }
   });*/
 
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("barba initialized");
-    barba.init({
-        views: [{
-          namespace: 'chapters',
-          afterEnter(data) {
-            initChaptersPage();
-            initStyles();
-          }
-        }, {
-          namespace: 'story',
-          afterEnter(data) {
-            initStoryPage();
-            initStyles();
-          }
-        }],
-        transitions: [{
-            name: 'opacity-transition',
-            leave(data) {
-            return gsap.to(data.current.container, { opacity: 0, duration: 1, onComplete: () => {
-                data.current.container.style.display = 'none'; 
-            }});
-            },
-            enter(data) {
-                gsap.from(data.next.container, { opacity: 0 });
-                return gsap.to(data.next.container, { opacity: 1, duration: 1 , onComplete: () => {
-                  lenis.resize();
-                  console.log("lenis resize");
-                }});
-            }
-        }]
-    });
-});
   
 // STORY PAGE SCRIPTS
 function initStoryPage() {
@@ -281,10 +246,3 @@ function initChaptersPage() {
 	});
 }
 
-// BARBA: RE INITIALIZE STYLES
-function initStyles() {
-    document.body.style.minHeight = '100%';
-    document.body.style.color = '#333';
-    document.body.style.fontFamily = 'Gentiumbookbasic, sans-serif';
-    document.body.style.overflow = 'auto';
-}
